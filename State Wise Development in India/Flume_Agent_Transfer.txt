@@ -1,0 +1,54 @@
+Moving Dataset from Local to HDFS using Flume
+----------------------------------------------
+
+Place Flume Configuration file in local Acadgild folder.
+Make sure the Dataset is placed in the directory that is specified in the Configuration file.
+
+Statewisedevelopment.conf
+-----------
+
+#Specify source, channel and sink
+agent1.sinks =  hdfs-sink1_1
+agent1.sources = source1_1
+agent1.channels = fileChannel1_1
+
+#Flume Configuration Starts
+# Define a file channel called fileChannel on agent1
+
+agent1.channels.fileChannel1_1.type = file 
+
+# on linux FS
+
+agent1.channels.fileChannel1_1.capacity = 200000
+agent1.channels.fileChannel1_1.transactionCapacity = 1000
+
+# Define a source for agent1
+
+agent1.sources.source1_1.type = spooldir
+
+# on linux FS
+#Spooldir in my case is /home/acadgild/statewisedevelopment
+
+agent1.sources.source1_1.spoolDir = /home/acadgild/statewisedevelopment
+agent1.sources.source1_1.fileHeader = false
+agent1.sources.source1_1.fileSuffix = .COMPLETED
+agent1.sinks.hdfs-sink1_1.type = hdfs
+
+#Sink is /flume_import under hdfs
+
+agent1.sinks.hdfs-sink1_1.hdfs.path = /user/acadgild/flume_import
+agent1.sinks.hdfs-sink1_1.hdfs.batchSize = 1000
+agent1.sinks.hdfs-sink1_1.hdfs.rollSize = 268435456
+agent1.sinks.hdfs-sink1_1.hdfs.rollInterval = 0
+agent1.sinks.hdfs-sink1_1.hdfs.rollCount = 5000
+agent1.sinks.hdfs-sink1_1.hdfs.writeFormat=Text
+
+agent1.sinks.hdfs-sink1_1.hdfs.fileType = DataStream
+agent1.sources.source1_1.channels = fileChannel1_1
+agent1.sinks.hdfs-sink1_1.channel = fileChannel1_1
+
+Execute the Flume using the command:
+-----------------------------------
+flume-ng agent --conf-file state.conf --name agent1 --conf $FLUME_HOME/conf -Dflume.root.logger=INFO,console
+
+Once the flume has copied the file from local to HDFS, the Dataset will also be found at /user/acadgild/flume_import
