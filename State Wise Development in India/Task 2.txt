@@ -1,4 +1,5 @@
-Problem statement 2: Write a Pig UDF to filter the districts who have reached 80% of objectives of BPL cards.
+statement 2: Write a Pig UDF to filter the districts who have reached 80% of objectives of BPL cards.
+
 Export the results to mysql using sqoop.
 
 Create a Pig UDF Filter function to calculate districts that have met 80% or more of the BPL card Objectives.
