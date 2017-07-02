@@ -1,4 +1,5 @@
-Problem statement 1: Find out the districts who achieved 100 percent objective in BPL cards
+statement 1: Find out the districts who achieved 100 percent objective in BPL cards
+
 Export the results to mysql using sqoop  
 
 Pig Script to calculate 100% Objective
@@ -41,6 +42,7 @@ Jammu & Kashmir,SHOPIAN                                 ,10196,10196
 
 Copy the output to HDFS
 ------------------------
+
 [acadgild@localhost ~]$ hadoop fs -put StateObj /user/acadgild
 
 Open another terminal:Terminal 2 and run all the daemons using 
